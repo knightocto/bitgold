@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>JewelryEstimate</title>
+</head>
+
+<body>
+
+<center>
+
+<form>
+<p><b><H2><u>ESTIMATE YOUR JEWELRY DESIGNS:</u></H2></b></p>
+<br>
+
+Name&ensp;<input type="Name">&ensp;&ensp;Email&ensp;<input type="email" style="width:30%;"><BR>
+
+<p><b><u>What Are We Creating?</U></b></p>
+
+<input type="checkbox" name="designs" id="design1" value="Ring" onclick="return       ValidateSelection();">
+<label for="design1">Ring</label>
+<input form="myForm" type="checkbox" name="Designs" id="design2"  value="Earrings" onclick="return ValidateSelection();"> 
+<label for="design2">Earrings</label>
+<input form="myForm" type="checkbox" name="Designs" id="design3"  value="Bracelete" onclick="return ValidateSelection();"> 
+<label for="design3">Bracelete</label>
+<input form="myForm" type="checkbox" name="Designs" id="design4"  value="Pendant" onclick="return ValidateSelection();"> 
+<label for="design4">Pendant</label>
+<input form="myForm" type="checkbox" name="Designs" id="design5"  value="Necklace" onclick="return ValidateSelection();"> 
+<label for="design5">Necklace</label>
+</form>
+
+<p><b><u>Choose Your Metal:</u></b></p>
+
+<input form="myForm" type="checkbox" name="Designs" id="design6"  value="10k Gold" onclick="return ValidateSelection();"> 
+<label for="design6">10k Gold</label>
+<input form="myForm" type="checkbox" name="Designs" id="design7"  value="14k Gold" onclick="return ValidateSelection();"> 
+<label for="design7">14k Gold</label>
+<input form="myForm" type="checkbox" name="Designs" id="design8"  value="18k Gold" onclick="return ValidateSelection();"> 
+<label for="design8">18k Gold</label>
+<input form="myForm" type="checkbox" name="Designs" id="design9"  value="22k Gold" onclick="return ValidateSelection();"> 
+<label for="design9">22k Gold</label>
+<input form="myForm" type="checkbox" name="Designs" id="design10"  value="24k Gold" onclick="return ValidateSelection();"> 
+<label for="design10">24k Gold</label>
+<input form="myForm" type="checkbox" name="Designs" id="design12"  value="Platinum" onclick="return ValidateSelection();"> 
+<label for="design12">Platinum</label>
+<input form="myForm" type="checkbox" name="Designs" id="design11"  value="Silver" onclick="return ValidateSelection();"> 
+<label for="design11">Silver</label><br><br>
+
+<p><b><u>PLASE DESCRIBE YOUR DESIGN</u></b></p>
+
+<form action="/html/tags/html_form_tag_action.cfm" method="post">
+<textarea name="comments" id="comments" style="width:90%;padding: 0%;height:250px;font:15px/25px cursive;border:1px dashed black;"> 
+</textarea><br>
+
+<p><b><u>DRAG & DROP PICTURE IN BOX BELOW</u></b></p>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    #drop-zone {
+      width: 90%;
+      height: 200px;
+      border: 2px dashed black;
+    }
+  </style>
+</head>
+  <div id="drop-zone"></div>
+
+<br>
+  <script>
+    const dropZone = document.querySelector('#drop-zone');
+
+    dropZone.addEventListener('dragover', (event) => {
+      event.preventDefault();
+      dropZone.style.backgroundColor = 'lightgray';
+    });
+
+    dropZone.addEventListener('dragleave', (event) => {
+      event.preventDefault();
+      dropZone.style.backgroundColor = 'white';
+    });
+
+    dropZone.addEventListener('drop', (event) => {
+      event.preventDefault();
+      dropZone.style.backgroundColor = 'white';
+
+      const file = event.dataTransfer.files[0];
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target.result;
+        img.width = 200;
+        img.height = 200;
+        dropZone.appendChild(img);
+      };
+
+      reader.readAsDataURL(file);
+    });
+  </script>
+</body>
+</html>
+
+
+</form>
+
+  
+<script type="text/javascript">  
+   function ValidateSelection()  
+   {  
+       var check_box = document.getElementsByName("Designs");  
+       var CheckedItems = 0; 
+       for(var i = 0; i < check_box.length; i++)  
+       {  
+           if(check_box[i].checked)  
+               CheckedItems++;  
+       }  
+       if(CheckedItems > 20){  
+           alert("You can't select more than twenty designs!");  
+           return false;}  
+   }  
+</script>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Drag and Drop or Choose a Picture</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <div class="drop-area" id="dropArea">
+        <p>- To upload a picture, drag and drop it here or click to browse your device.<br>
+- After the picture is uploaded, you can drag and drop it in the box above.</p>
+
+        <input type="file" id="fileInput" accept="image/*">
+        <img id="preview" src="" alt="Preview Image">
+    </div>
+    <script src="script.js"></script>
+  </body>
+  </html>
+<br>
+
+<button id="saveButton">Save Webpage as Image</button>
+
+
+<p> After Clicking Save your Webpage image it will save as a PNG file on your device and give it a name.<br>
+  Click Email Below.<br><br>
+  <b><a href=mailto:knightjewelrycollection@gmail.com> knightjewelrycollection@gmail.com</a></b><br><br>
+   Attach your webpage image file to the email and press send.</p><br>
+  
+  </p><br><br><br>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.1/html2canvas.min.js"></script>
+
+<script>
+document.getElementById('saveButton').addEventListener('click', function() {
+    html2canvas(document.body).then(function(canvas) {
+        var imgData = canvas.toDataURL('image/png');
+        var a = document.createElement('a');
+        a.href = imgData;
+        a.download = 'webpage_screenshot.png';
+        a.click();
+    });
+});
+</script>
+
+<?php 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $to = 'recipient@example.com';
+  $subject = 'Webpage Screenshot';
+  $message = 'Please find the screenshot attached.';
+  $headers = 'From: sender@example.com';
+
+  $file = 'webpage_screenshot.png';
+
+  if (file_exists($file)) {
+      $attachment = chunk_split(base64_encode(file_get_contents($file)));
+      $boundary = md5(time());
+
+      $headers .= "\nMIME-Version: 1.0";
+      $headers .= "\nContent-Type: multipart/mixed; boundary=\"{$boundary}\"";
+
+      $message = "--{$boundary}\n";
+      $message .= "Content-Type: text/plain; charset=\"UTF-8\"\n";
+      $message .= "Content-Transfer-Encoding: 7bit\n\n";
+      $message .= $message . "\n\n";
+
+      $message .= "--{$boundary}\n";
+      $message .= "Content-Type: application/octet-stream; name=\"{$file}\"\n";
+      $message .= "Content-Transfer-Encoding: base64\n";
+      $message .= "Content-Disposition: attachment; filename=\"{$file}\"\n\n";
+      $message .= $attachment . "\n";
+      $message .= "--{$boundary}--";
+
+      if (mail($to, $subject, $message, $headers)) {
+          echo 'Email sent successfully!';
+      } else {
+          echo 'Email sending failed.';
+      }
+  } else {
+      echo 'Screenshot not found.';
+  }
+}
+?>
+
+</center>
+</body>
+</html>
