@@ -10,6 +10,7 @@
 <center>
 
 <form>
+  <br>
 <p><b><H2><u>ESTIMATE YOUR JEWELRY DESIGNS:</u></H2></b></p>
 <br>
 
@@ -27,6 +28,7 @@ Name&ensp;<input type="Name">&ensp;&ensp;Email&ensp;<input type="email" style="w
 <label for="design4">Pendant</label>
 <input form="myForm" type="checkbox" name="Designs" id="design5"  value="Necklace" onclick="return ValidateSelection();"> 
 <label for="design5">Necklace</label>
+
 </form>
 
 <p><b><u>Choose Your Metal:</u></b></p>
@@ -57,52 +59,68 @@ Name&ensp;<input type="Name">&ensp;&ensp;Email&ensp;<input type="email" style="w
 <!DOCTYPE html>
 <html>
 
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <style>
-    #drop-zone {
-      width: 90%;
-      height: 200px;
-      border: 2px dashed black;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop Multiple Images</title>
+    <style>
+        #drop-area {
+            border: 2px dashed #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
 </head>
-  <div id="drop-zone"></div>
+<body>
+    <div id="drop-area">
+        <p>Drag and drop images here, or click to select multiple files.</p>
+        <input type="file" id="fileInput" multiple>
+        <div id="image-preview"></div>
+    </div>
 
-<br>
-  <script>
-    const dropZone = document.querySelector('#drop-zone');
+    <script>
+        const dropArea = document.getElementById('drop-area');
+        const fileInput = document.getElementById('fileInput');
+        const imagePreview = document.getElementById('image-preview');
 
-    dropZone.addEventListener('dragover', (event) => {
-      event.preventDefault();
-      dropZone.style.backgroundColor = 'lightgray';
-    });
+        dropArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropArea.style.border = '2px dashed #000';
+        });
 
-    dropZone.addEventListener('dragleave', (event) => {
-      event.preventDefault();
-      dropZone.style.backgroundColor = 'white';
-    });
+        dropArea.addEventListener('dragleave', () => {
+            dropArea.style.border = '2px dashed #ccc';
+        });
 
-    dropZone.addEventListener('drop', (event) => {
-      event.preventDefault();
-      dropZone.style.backgroundColor = 'white';
+        dropArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropArea.style.border = '2px dashed #ccc';
+            const files = e.dataTransfer.files;
+            handleFiles(files);
+        });
 
-      const file = event.dataTransfer.files[0];
-      const reader = new FileReader();
+        fileInput.addEventListener('change', () => {
+            const files = fileInput.files;
+            handleFiles(files);
+        });
 
-      reader.onload = (event) => {
-        const img = new Image();
-        img.src = event.target.result;
-        img.width = 200;
-        img.height = 200;
-        dropZone.appendChild(img);
-      };
-
-      reader.readAsDataURL(file);
-    });
-  </script>
+        function handleFiles(files) {
+            imagePreview.innerHTML = '';
+            for (let i = 0; i < files.length; i++) {
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(files[i]);
+                img.style.maxWidth = '100px';
+                img.style.maxHeight = '100px';
+                imagePreview.appendChild(img);
+            }
+        }
+    </script>
 </body>
 </html>
-
+<br>
 
 </form>
 
@@ -123,24 +141,7 @@ Name&ensp;<input type="Name">&ensp;&ensp;Email&ensp;<input type="email" style="w
    }  
 </script>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Drag and Drop or Choose a Picture</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-</head>
-<body>
-    <div class="drop-area" id="dropArea">
-        <p>- To upload a picture, drag and drop it here or click to browse your device.<br>
-- After the picture is uploaded, you can drag and drop it in the box above.</p>
 
-        <input type="file" id="fileInput" accept="image/*">
-        <img id="preview" src="" alt="Preview Image">
-    </div>
-    <script src="script.js"></script>
-  </body>
-  </html>
-<br>
 
 <button id="saveButton">Save Webpage as Image</button>
 
@@ -165,45 +166,6 @@ document.getElementById('saveButton').addEventListener('click', function() {
     });
 });
 </script>
-
-<?php 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $to = 'recipient@example.com';
-  $subject = 'Webpage Screenshot';
-  $message = 'Please find the screenshot attached.';
-  $headers = 'From: sender@example.com';
-
-  $file = 'webpage_screenshot.png';
-
-  if (file_exists($file)) {
-      $attachment = chunk_split(base64_encode(file_get_contents($file)));
-      $boundary = md5(time());
-
-      $headers .= "\nMIME-Version: 1.0";
-      $headers .= "\nContent-Type: multipart/mixed; boundary=\"{$boundary}\"";
-
-      $message = "--{$boundary}\n";
-      $message .= "Content-Type: text/plain; charset=\"UTF-8\"\n";
-      $message .= "Content-Transfer-Encoding: 7bit\n\n";
-      $message .= $message . "\n\n";
-
-      $message .= "--{$boundary}\n";
-      $message .= "Content-Type: application/octet-stream; name=\"{$file}\"\n";
-      $message .= "Content-Transfer-Encoding: base64\n";
-      $message .= "Content-Disposition: attachment; filename=\"{$file}\"\n\n";
-      $message .= $attachment . "\n";
-      $message .= "--{$boundary}--";
-
-      if (mail($to, $subject, $message, $headers)) {
-          echo 'Email sent successfully!';
-      } else {
-          echo 'Email sending failed.';
-      }
-  } else {
-      echo 'Screenshot not found.';
-  }
-}
-?>
 
 </center>
 </body>
